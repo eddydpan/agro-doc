@@ -4,9 +4,9 @@ Script for TrOCR on test images to evaluate accuracy on my handwriting.
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 from PIL import Image
 
-processor = TrOCRProcessor.from_pretrained("microsoft/trocr-large-handwritten")
-model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-large-handwritten")
-filename = "attachments/eddy-whiteboard-handwriting.jpg"
+processor = TrOCRProcessor.from_pretrained("microsoft/trocr-base-handwritten")
+model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwritten")
+filename = "attachments/bill-whiteboard.jpeg"
 
 image = Image.open(filename).convert("RGB")
 pixel_values = processor(image, return_tensors="pt").pixel_values
