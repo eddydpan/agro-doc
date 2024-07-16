@@ -1,0 +1,4 @@
+transformers
+Pillow
+google-cloud-vision
+google-auth
