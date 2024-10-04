@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Posts{% endblock %}</h1>
+  
+  <h4>Search</h4>
+  <form method="POST" action="{{ url_for('gcp.index') }}">
+    <input name="search" id="search" value="{{ request.form.get('search', '') }}"> <!-- Safely access search value -->
+    <input type="submit" value="Search"> 
+  </form>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('gcp.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ post['title'] }}</h1>
+          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+        {% if g.user['id'] == post['author_id'] %}
+          <a class="action" href="{{ url_for('gcp.update', id=post['id']) }}">Edit</a>
+        {% endif %}
+      </header>    
+      <img src="{{ url_for('static', filename='uploads/images/' + post['img_path']) }}" alt="{{ post['title'] }}" style="max-width: 100%; height: auto;">
+      <h4>GCP Output</h4>
+      <p class="gcp_output">{{ post['gcp_output'] }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
