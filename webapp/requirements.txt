@@ -1,0 +1,4 @@
+flask
+google-cloud-vision
+gunicorn
+Werkzeug

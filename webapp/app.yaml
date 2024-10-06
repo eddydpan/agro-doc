@@ -1,0 +1,9 @@
+runtime: python312
+entrypoint: gunicorn -b :$PORT 'flaskr:create_app()'
+
+handlers:
+- url: /static
+  static_dir: flaskr/static
+
+- url: /.*
+  script: auto
