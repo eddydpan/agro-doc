@@ -6,11 +6,15 @@ from werkzeug.utils import secure_filename
 from flaskr.auth import login_required
 from flaskr.db import get_db
 from google.cloud import vision
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
+key = os.environ["VISION_KEY"]
 
 
 def detect_document(path):
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = ".creds/farmdocs-7e1092c19709.json"
     """Detects document features in an image."""
     client = vision.ImageAnnotatorClient()
     with open(path, "rb") as image_file:
@@ -143,31 +147,19 @@ def update(id):
 
     if request.method == 'POST':
         title = request.form['title']
-        file = request.files['image']
+        gcp_output = request.form['gcp_output']
         error = None
 
         if not title:
             error = 'Title is required.'
-        elif file.filename == '':
-            error = 'No selected file.'
-        elif not allowed_file(file.filename):
-            error = 'Invalid file type.'
-
         if error is not None:
             flash(error)
         else:
-            filename = secure_filename(file.filename)
-            img_path = filename
-            os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-            root_img_path = os.path.join(UPLOAD_FOLDER, filename)
-            file.save(root_img_path)  # Save the file in the flaskr/static/uploads/images directory
-            gcp_output = detect_document(root_img_path)
-
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, img_path = ?, gcp_output = ?'
+                'UPDATE post SET title = ?, gcp_output = ?'
                 ' WHERE id = ?',
-                (title, img_path, gcp_output, id)
+                (title, gcp_output, id)
             )
             db.commit()
             return redirect(url_for('gcp.index'))

@@ -31,6 +31,8 @@ def create_app(test_config=None):
     
     from . import db
     db.init_app(app)
+    if not os.path.exists(app.config['DATABASE']):
+        db.init_db()
     from . import auth
     app.register_blueprint(auth.bp)
     from . import gcp
@@ -40,4 +42,9 @@ def create_app(test_config=None):
     # app.add_url_rule('/', endpoint='index')
     app.add_url_rule('/', endpoint='gcp')
 
+
+    @app.route('/debug')
+    def debug():
+        path = app.config['DATABASE']
+        return f"{path}, {os.path.exists(path)}, {os.stat(path)}"
     return app
