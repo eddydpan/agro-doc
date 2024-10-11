@@ -6,16 +6,13 @@ from werkzeug.utils import secure_filename
 from flaskr.auth import login_required
 from flaskr.db import get_db
 from google.cloud import vision
-from dotenv import load_dotenv
 import os
-
-load_dotenv()
-key = os.environ["VISION_KEY"]
 
 
 def detect_document(path):
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = ".creds/farmdocs-7e1092c19709.json"
     """Detects document features in an image."""
+    
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = ".creds/farmdocs-7e1092c19709.json"
     client = vision.ImageAnnotatorClient()
     with open(path, "rb") as image_file:
         content = image_file.read()
