@@ -4,6 +4,8 @@ from enum import Enum
 from google.cloud import vision
 from PIL import Image, ImageDraw
 
+# put in terminal: python test-gcp-bounds.py attachments/Powisset-Documents/POW-wb-harvest-week-091823-table.jpg -out_file out.jpg
+
 
 class FeatureType(Enum):
     PAGE = 1

@@ -77,4 +77,5 @@ def detect_document(path):
 
 
 # detect_document("data/IAM_lines/a01/a01-000u/a01-000u-00.png")
-detect_document("attachments/eddy-pencil-handwriting.jpeg")
+# detect_document("attachments/eddy-pencil-handwriting.jpeg")
+detect_document("attachments/Powisset-Documents/POW-wb-harvest-week-091823-table.jpg")
