@@ -1,4 +1,8 @@
-transformers
+# transformers
 Pillow
 google-cloud-vision
 google-auth
+numpy
+matplotlib
+opencv-python
+pyapriltags
