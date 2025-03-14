@@ -1,5 +1,11 @@
 unilm/
 data/
+gcp/
+# Webapp stuff
+webapp/.gitignore
+webapp/cloud-sql-proxy
+webapp/cloud_sql_proxy
+webapp/mysql-apt-config_0.8.22-1_all.deb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
